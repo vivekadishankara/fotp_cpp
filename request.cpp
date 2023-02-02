@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <map>
+#include <iomanip>
 
 using namespace std;
 
@@ -134,8 +135,6 @@ class Request{
                         
                     }
 
-                    
-
                     entry = "";
                     continue;
                 }
@@ -146,6 +145,12 @@ class Request{
             return Request(request_type, order_id, token, symbol, side, price, quantity,
                            quantity_filled, disclosed_qnty, time_stamp, duration, order_type,
                            account, exchange, num_copies);
+        }
+        void print_time_stamp(){
+            cout<<this->time_stamp<<endl;
+        }
+        void print_price(){
+            cout<<setprecision(20)<<this->price<<endl;
         }
 };
 
@@ -175,18 +180,21 @@ map<string, string> parse_request(string &str, int N){
 int main(){
     ifstream myfile ("request_480069891");
     string mystring;
+    double h=4.0;
 
     if (myfile.is_open()){
         myfile >> mystring;
         int N = mystring.length();
-        map<string, string> request_map = parse_request(mystring, N);
-        map<string, string>::iterator it = request_map.begin();
+        // map<string, string> request_map = parse_request(mystring, N);
+        // map<string, string>::iterator it = request_map.begin();
 
         Request request = Request::parse(mystring, N);
 
-        while (it != request_map.end()){
-            cout<<it->first<<":\t"<<it->second<<endl;
-            it++;
+        // while (it != request_map.end()){
+        //     cout<<it->first<<":\t"<<it->second<<endl;
+        //     it++;
+        request.print_time_stamp();
+        request.print_price();
+        cout<<h;
         }
-    }
 }
